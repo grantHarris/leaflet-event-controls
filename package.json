@@ -1,0 +1,29 @@
+{
+   "name": "leaflet-event-controls",
+   "label": {
+      "en": "leaflet-event-controls"
+   },
+   "language": "JavaScript",
+   "version": "0.1.0",
+   "description": "Dynamically add and remove controls from leaflet via leaflet events.",
+   "repository": {
+      "type": "git",
+      "url": "git@github.com:grantHarris/leaflet-event-controls.git"
+   },
+   "license": "MIT",
+   "keywords": [
+      "gis",
+      "map",
+      "leaflet"
+   ],
+   "main": "src/L.EventControls.js",
+   "dependencies": {
+      "leaflet": "*",
+   },
+   "repository": {
+      "type": "git",
+      "url": "https://github.com/grantHarris/leaflet-event-controls"
+   },
+   "devDependencies": {
+   }
+}

@@ -18,7 +18,7 @@
    ],
    "main": "src/L.EventControls.js",
    "dependencies": {
-      "leaflet": "*",
+      "leaflet": "*"
    },
    "repository": {
       "type": "git",

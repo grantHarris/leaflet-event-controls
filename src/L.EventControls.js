@@ -18,11 +18,11 @@ L.EventControls = L.Class.extend({
     },
     addTo: function(map) {
         this._map = map;
-        L.EventController.prototype._hookUpControlEvents.call(this);
+        L.EventControls.prototype._hookUpControlEvents.call(this);
         return this;
     },
     removeFrom: function(map) {
-        L.EventController.prototype._teardownControlEvents.call(this);
+        L.EventControls.prototype._teardownControlEvents.call(this);
         if (this._map === map) {
             delete this._map;
         }
@@ -40,14 +40,14 @@ L.EventControls = L.Class.extend({
         });
 
         if (this._map) {
-            L.EventController.prototype._hookUpControlEvents.call(this);
+            L.EventControls.prototype._hookUpControlEvents.call(this);
         }
         return this;
     },
     removeControl: function(control) {
         for (var i = this._controls.length - 1; i >= 0; i--) {
             if (this._controls[i].control === control) {
-                L.EventController.prototype._tearDownControlEvent.call(this, this._controls[i]);
+                L.EventControls.prototype._tearDownControlEvent.call(this, this._controls[i]);
                 this._controls.splice(i, 1);
             }
         }
@@ -99,7 +99,7 @@ L.EventControls = L.Class.extend({
     _teardownControlEvents: function() {
         var that = this;
         this._controls.map(function(entry) {
-            L.EventController.prototype._tearDownControlEvent.call(that, entry);
+            L.EventControls.prototype._tearDownControlEvent.call(that, entry);
         });
     },
     _tearDownControlEvent: function(entry) {

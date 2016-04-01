@@ -1,14 +1,14 @@
 'use strict';
 
 /*
-	
-	Dynamically add and remove controls from leaflet via leaflet events. 
-	var map = L.map(id, options);
-	var ec = L.eventControls();
-	var control = L.control.foo();
-	ec.addControl(control, 'foo', ['click', 'bar']).addTo(map);
+    
+    Dynamically add and remove controls from leaflet via leaflet events. 
+    var map = L.map(id, options);
+    var ec = L.eventControls();
+    var control = L.control.foo();
+    ec.addControl(control, 'foo', ['click', 'bar']).addTo(map);
 
-	Will add the foo control to map on foo event. Will remove it on the click event or bar event.
+    Will add the foo control to map on foo event. Will remove it on the click event or bar event.
 
 */
 
@@ -23,15 +23,16 @@ L.EventControls = L.Class.extend({
     },
     removeFrom: function(map) {
         L.EventControls.prototype._teardownControlEvents.call(this);
+        L.EventControls.prototype._removeControlsFromMap.call(this);
         if (this._map === map) {
             delete this._map;
         }
         return this;
     },
     /* 
-		addEvents and removeEvents can be either strings (for specifying one event) or
-		arrays of strings (for adding and removing on multiple events).
-	*/
+        addEvents and removeEvents can be either strings (for specifying one event) or
+        arrays of strings (for adding and removing on multiple events).
+    */
     addControl: function(control, addEvents, removeEvents) {
         this._controls.push({
             control: control,
@@ -53,18 +54,25 @@ L.EventControls = L.Class.extend({
         }
         return this;
     },
+    _removeControlsFromMap: function(){
+        this._controls.map(function(entry) {
+            if (entry.control._map) {
+                entry.control.removeFrom(entry.control._map);
+            }
+        });
+    },
     _hookUpControlEvents: function() {
         var that = this;
         this._controls.map(function(entry) {
             if (entry.addEvents && !entry.addLayerOnEvent) {
                 entry.addLayerOnEvent = function addLayerOnEvent(evt) {
                     //Only add if the control is not on the map already
-                    if (!entry.control._map) {
+                   if (!entry.control._map) {
                         //Pass the event that triggered the control creation on to its options
                         entry.control.options.$event = evt;
                         that._map.addControl(entry.control);
                         that._map.invalidateSize();
-                    }
+                   }
                 };
                 if (Array.isArray(entry.addEvents)) {
                     entry.addEvents.map(function(event) {
